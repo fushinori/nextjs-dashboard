@@ -4,12 +4,13 @@ import CustomersTable from "@/app/ui/customers/table";
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: {
+  searchParams?: Promise<{
     query?: string;
     page?: string;
-  };
+  }>;
 }) {
-  const query = searchParams?.query || "";
+  const resolvedParams = await searchParams;
+  const query = resolvedParams?.query || "";
 
   const customers = await fetchFilteredCustomers(query);
 
